@@ -28,16 +28,17 @@ def search_path_maze(maze: list, start: tuple, end: tuple) -> list:
 
         return list_edges
 
-    def dfs(graph: dict, start: tuple, end: tuple, path=None):
+    def dfs(graph: dict, start: tuple, end: tuple, path=None, route=[]):
         """depth-first search function"""
         if path is None:
             path = []
         path = path + [start]
         if start == end:  # If we come to the exit, we return the solution
-            return path
+            route.append(path)
         for node in graph[start]:
             if node not in path:
-                return dfs(graph, node, end, path)
+                dfs(graph, node, end, path)
+        return route
 
     # graph adjacency list (type: dict)
     dict_vortex = {}
@@ -49,6 +50,8 @@ def search_path_maze(maze: list, start: tuple, end: tuple) -> list:
 
     # list of exit paths
     route_list = dfs(dict_vortex, start, stop)
+
+
 
     min_answer = []
 
