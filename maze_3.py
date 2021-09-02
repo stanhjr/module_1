@@ -34,11 +34,10 @@ def search_path_maze(maze: list, start: tuple, end: tuple) -> list:
             path = []
         path = path + [start]
         if start == end:  # If we come to the exit, we return the solution
-            route_list.append(path)
+            return path
         for node in graph[start]:
             if node not in path:
-                dfs(graph, node, end, path)
-        return path
+                return dfs(graph, node, end, path)
 
     # graph adjacency list (type: dict)
     dict_vortex = {}
@@ -49,11 +48,8 @@ def search_path_maze(maze: list, start: tuple, end: tuple) -> list:
                 dict_vortex[key] = search_for_edges(x, y)
 
     # list of exit paths
-    route_list = []
+    route_list = dfs(dict_vortex, start, stop)
 
-
-    dfs(dict_vortex, start, stop)
-    route_list = route_list[0]
     min_answer = []
 
     for i in route_list:
